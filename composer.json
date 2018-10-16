@@ -1,0 +1,26 @@
+{
+    "name": "ariarijp/phpixela",
+    "description": "Pixela API client for PHP",
+    "version": "0.1.0",
+    "type": "library",
+    "license": "MIT",
+    "homepage": "https://github.com/ariarijp/phpixela",
+    "require": {
+        "php": ">=7.0.0",
+        "guzzlehttp/guzzle": "^6.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.4"
+    },
+    "authors": [
+        {
+            "name": "ariarijp",
+            "email": "takuya.arita@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Phpixela\\": "src/Phpixela"
+        }
+    }
+}
