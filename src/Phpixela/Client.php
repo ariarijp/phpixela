@@ -85,7 +85,7 @@ class Client
      */
     public function deleteUser(string $username)
     {
-        $url = sprintf('users/%s/graphs', $username);
+        $url = sprintf('users/%s', $username);
         return $this->request('delete', $url);
     }
 
