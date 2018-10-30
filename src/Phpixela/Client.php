@@ -90,6 +90,7 @@ class Client
     }
 
     /**
+     * @param string $username
      * @param string $id
      * @param string $name
      * @param string $unit
@@ -98,11 +99,12 @@ class Client
      * @return mixed|string
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function createGraph(string $id, string $name, string $unit, string $type, string $color)
+    public function createGraph(string $username, string $id, string $name, string $unit, string $type, string $color)
     {
-        $url = sprintf('users/%s/graphs/%s', $username, $graphId);
+        $url = sprintf('users/%s/graphs', $username);
         return $this->request('post', $url, [
             'json' => [
+                'id' => $id,
                 'name' => $name,
                 'unit' => $unit,
                 'type' => $type,
