@@ -1,0 +1,26 @@
+<phpunit
+		 beStrictAboutOutputDuringTests="false"
+		 backupGlobals="false"
+		 backupStaticAttributes="false"
+		 bootstrap="tests/bootstrap.php"
+		 colors="false"
+		 convertErrorsToExceptions="true"
+		 convertNoticesToExceptions="true"
+		 convertWarningsToExceptions="true"
+		 processIsolation="false"
+		 stopOnFailure="false"
+>
+	<testsuites>
+		<testsuite name="Collection Test Suite">
+			<directory suffix="Test.php">./tests/</directory>
+		</testsuite>
+	</testsuites>
+	
+	<filter>
+		<whitelist>
+			<directory suffix=".php">./lib</directory>
+			<directory suffix=".php">./docs</directory>
+			<directory suffix=".php">./vendor</directory>
+		</whitelist>
+	</filter>
+</phpunit>
