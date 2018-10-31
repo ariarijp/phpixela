@@ -1,0 +1,23 @@
+language: php
+php:
+  - 7.0
+  - 7.1
+  - 7.2
+env:
+  global:
+    PHP_SAPI=phpdbg
+
+before_script:
+  - composer self-update
+  - composer install
+
+script:
+  - if [[ $PHP_SAPI  = 'phpdbg' ]]; then phpdbg -qrr vendor/bin/phpunit --coverage-clover=coverage.clover ; fi
+  - if [[ $PHP_SAPI != 'phpdbg' ]]; then vendor/bin/phpunit ; fi
+
+after_script:
+#  - if [[ $PHP_SAPI = 'phpdbg' ]]; then wget https://scrutinizer-ci.com/ocular.phar ; fi
+#  - if [[ $PHP_SAPI = 'phpdbg' ]]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover ; fi
+
+after_success:
+  - if [[ $PHP_SAPI = 'phpdbg' ]]; then php ./vendor/bin/php-coveralls -v -x coverage.clover ; fi
