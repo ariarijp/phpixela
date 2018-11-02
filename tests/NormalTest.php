@@ -12,12 +12,12 @@ use Phpixela\Client;
 class NormalTest extends TestCase
 {
     /** @var $user_name string */
-    const user_name = "phpixela-tester";
+    const user_name = "phpixela1";
     /** @var self::token string */
     const token = "CC517a6943346e30474e66594e49782b6f69557643673dCC";
 
     /** @var $user_name_cd string */
-    const user_name_cd = "phpixela-c-d-tester";
+    const user_name_cd = "phpixela2";
     /** @var $cd_token string */
     const cd_token = "61434c4d6f2b6d6748667856577537674a4c70596c673d3d";
     /** @var $cd_token_reset string */
@@ -30,9 +30,9 @@ class NormalTest extends TestCase
      */
     public static function getUserName() {
         $base_name = self::user_name;
-        $php_version = str_replace('.', '-', phpversion());
-        $user_name = "{$base_name}-{$php_version}";
-        return "{$base_name}-{$php_version}";
+        $php_version = phpversion();
+        $user_name = strtolower(str_replace('.', '-', "{$base_name}-{$php_version}"));
+        return $user_name;
     }
 
     /**
@@ -41,8 +41,8 @@ class NormalTest extends TestCase
      */
     public static function getUserNameCd() {
         $base_name = self::user_name_cd;
-        $php_version = str_replace('.', '-', phpversion());
-        $user_name = "{$base_name}-{$php_version}";
+        $php_version = phpversion();
+        $user_name = strtolower(str_replace('.', '-', "{$base_name}-{$php_version}"));
         return $user_name;
     }
 
@@ -69,7 +69,8 @@ class NormalTest extends TestCase
             $this->assertTrue($response['isSuccess'], 'API: updateUser 2');
 
         } catch (\Throwable $e) {
-            $this->fail($e);
+            echo $user_name_cd;
+            $this->fail($e, "{$user_name_cd}");
         } finally {
             // delete
             $response = $client->deleteUser($user_name_cd);
@@ -79,6 +80,7 @@ class NormalTest extends TestCase
 
     /**
      * @test
+     * @depends api_user
      */
     public function ready_test_user ()
     {
@@ -100,7 +102,8 @@ class NormalTest extends TestCase
         $client = new Client(self::token);
         $user_name = self::getUserName();
 
-        $graph_id = "test-graph-01";
+        $uniq = substr(md5(uniqid(rand(),1)), 0,10);
+        $graph_id = "t1-{$uniq}";
         $graph_name = "test-graph";
         $unit = 'commit';
         $type = 'int';
@@ -118,11 +121,11 @@ class NormalTest extends TestCase
 
             // getGraphs
             $response = $client->getGraphs($user_name);
-            $this->assertCount(1, $response['graphs'], 'API: getGraphs');
+            $this->assertInternalType('array', $response['graphs']);
 
             // updateGraph
             $response = $client->updateGraph($user_name, $graph_id, $graph_name, $unit, $color_changed);
-            $this->assertTrue($response['isSuccess'], 'API: updateGraph');
+            $this->assertTrue($response['isSuccess'], 'API: updateGraph {$user_name} {$graph_id} {$graph_name} {$unit} {$color_changed}');
 
         } catch (\Throwable $e) {
             $this->fail($e);
@@ -144,7 +147,8 @@ class NormalTest extends TestCase
         $client = new Client(self::token);
         $user_name = self::getUserName();
 
-        $graph_id = "test-graph-01";
+        $uniq = substr(md5(uniqid(rand(),1)), 0,10);
+        $graph_id = "t2-{$uniq}";
         $graph_name = "test-graph";
         $unit = 'commit';
         $type = 'int';
