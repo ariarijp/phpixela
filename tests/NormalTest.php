@@ -81,23 +81,31 @@ class NormalTest extends TestCase
         $unit = 'commit';
         $type = 'int';
         $color = 'shibafu';
+        $color_changed = 'sora';
 
         try {
             // createGraph
             $response = $client->createGraph($user_name, $graph_id, $graph_name, $unit, $type, $color);
             $this->assertTrue($response['isSuccess'], 'API: createGraph');
 
-            // TODO getGraph
-            // TODO getGraphs
-            // TODO updateGraph
+            // getGraph
+            $response = $client->getGraph($user_name, $graph_id);
+            $this->assertStringStartsWith('<svg ', $response, 'API: getGraph');
 
-            // deleteGraph
-            $response = $client->deleteGraph($user_name, $graph_id);
-            $this->assertTrue($response['isSuccess'], 'API: deleteGraph');
+            // getGraphs
+            $response = $client->getGraphs($user_name);
+            $this->assertCount(1, $response['graphs'], 'API: getGraphs');
+
+            // updateGraph
+            $response = $client->updateGraph($user_name, $graph_id, $graph_name, $unit, $color_changed);
+            $this->assertTrue($response['isSuccess'], 'API: updateGraph');
 
         } catch (\Throwable $e) {
             $this->fail($e);
         } finally {
+            // deleteGraph
+            $response = $client->deleteGraph($user_name, $graph_id);
+            $this->assertTrue($response['isSuccess'], 'API: deleteGraph');
         }
 
         $this->assertTrue(true);
