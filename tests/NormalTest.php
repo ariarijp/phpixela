@@ -117,12 +117,53 @@ class NormalTest extends TestCase
      */
     public function api_pixel ()
     {
-        // TODO createPixel
-        // TODO getPixel
-        // TODO updatePixel
-        // TODO inclimentPixel
-        // TODO declimentPixel
-        // TODO deletePixel
+        $client = new Client(self::token);
+        $user_name = self::user_name;
+
+        $graph_id = "test-graph-01";
+        $graph_name = "test-graph";
+        $unit = 'commit';
+        $type = 'int';
+        $color = 'shibafu';
+
+        $today = date('Ymd');
+
+        try {
+            // createGraph
+            $response = $client->createGraph($user_name, $graph_id, $graph_name, $unit, $type, $color);
+            $this->assertTrue($response['isSuccess'], 'API: createGraph');
+
+            // createPixel
+            $response = $client->createPixel($user_name, $graph_id, $today, 1);
+            $this->assertTrue($response['isSuccess'], 'API: createPixel');
+
+            // getPixel
+            $response = $client->getPixel($user_name, $graph_id, $today);
+            $this->assertEquals(1, $response['quantity'], 'API: getPixel');
+
+            // updatePixel
+            $response = $client->updatePixel($user_name, $graph_id, $today, 2);
+            $this->assertTrue($response['isSuccess'], 'API: updatePixel');
+
+            // incrementPixel
+            $response = $client->incrementPixel($user_name, $graph_id, $today);
+            $this->assertTrue($response['isSuccess'], 'API: incrementPixel');
+
+            // decrementPixel
+            $response = $client->decrementPixel($user_name, $graph_id, $today);
+            $this->assertTrue($response['isSuccess'], 'API: decrementPixel');
+
+            // deletePixel
+            $response = $client->deletePixel($user_name, $graph_id, $today);
+            $this->assertTrue($response['isSuccess'], 'API: declimentPixel');
+
+        } catch (\Throwable $e) {
+            $this->fail($e);
+        } finally {
+            // deleteGraph
+            $response = $client->deleteGraph($user_name, $graph_id);
+            $this->assertTrue($response['isSuccess'], 'API: deleteGraph');
+        }
         $this->assertTrue(true);
     }
 
