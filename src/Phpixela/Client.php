@@ -5,12 +5,14 @@ namespace Phpixela;
 use Phpixela\Traits\GraphClientTrait;
 use Phpixela\Traits\PixelClientTrait;
 use Phpixela\Traits\UserClientTrait;
+use Phpixela\Traits\WebhookClientTrait;
 
 class Client
 {
     use GraphClientTrait;
     use PixelClientTrait;
     use UserClientTrait;
+    use WebhookClientTrait;
 
     const BASE_URI = 'https://pixe.la/v1/';
 

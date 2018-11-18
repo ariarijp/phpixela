@@ -5,6 +5,7 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Phpixela\Values\GraphColorValues;
 use Phpixela\Values\GraphTypeValues;
+use Phpixela\Values\WebhookTypeValues;
 use PHPUnit\Framework\TestCase;
 
 class ClientTest extends TestCase
@@ -154,6 +155,48 @@ class ClientTest extends TestCase
     {
         $client = $this->getClient();
         $resp = $client->deletePixel(self::USERNAME, 'test', '20180915');
+
+        $this->assertTrue($resp['isSuccess']);
+    }
+
+    public function testCreateWebhook()
+    {
+        $client = $this->getClient();
+        $resp = $client->createWebhook(self::USERNAME, 'test', WebhookTypeValues::INCREMENT);
+
+        $this->assertTrue($resp['isSuccess']);
+    }
+
+    public function testGetWebhooks()
+    {
+        $client = $this->getClient([
+            new Response(200, [], json_encode([
+                'webhooks' => [
+                    [
+                        'webhookHash' => 'webhookhashstring',
+                        'graphID' => 'test-graph',
+                        'type' => 'increment',
+                    ],
+                ],
+            ])),
+        ]);
+        $resp = $client->getWebhooks(self::USERNAME);
+
+        $this->assertEquals('webhookhashstring', $resp['webhooks'][0]['webhookHash']);
+    }
+
+    public function testInvokeWebhook()
+    {
+        $client = $this->getClient();
+        $resp = $client->invokeWebhook(self::USERNAME, 'webhookhashstring');
+
+        $this->assertTrue($resp['isSuccess']);
+    }
+
+    public function testDeleteWebhook()
+    {
+        $client = $this->getClient();
+        $resp = $client->deleteWebhook(self::USERNAME, 'webhookhashstring');
 
         $this->assertTrue($resp['isSuccess']);
     }
