@@ -3,8 +3,8 @@
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use Phpixela\Values\ColorValues;
-use Phpixela\Values\TypeValues;
+use Phpixela\Values\GraphColorValues;
+use Phpixela\Values\GraphTypeValues;
 use PHPUnit\Framework\TestCase;
 
 class ClientTest extends TestCase
@@ -56,7 +56,7 @@ class ClientTest extends TestCase
     public function testCreateGraph()
     {
         $client = $this->getClient();
-        $resp = $client->createGraph(self::USERNAME, 'test', 'test', 'commit', TypeValues::INT, ColorValues::SHIBAFU);
+        $resp = $client->createGraph(self::USERNAME, 'test', 'test', 'commit', GraphTypeValues::INT, GraphColorValues::SHIBAFU);
 
         $this->assertTrue($resp['isSuccess']);
     }
@@ -95,7 +95,7 @@ class ClientTest extends TestCase
     public function testUpdateGraph()
     {
         $client = $this->getClient();
-        $resp = $client->updateGraph(self::USERNAME, 'test', 'test', 'commit', TypeValues::INT, ColorValues::SHIBAFU);
+        $resp = $client->updateGraph(self::USERNAME, 'test', 'test', 'commit', GraphTypeValues::INT, GraphColorValues::SHIBAFU);
 
         $this->assertTrue($resp['isSuccess']);
     }

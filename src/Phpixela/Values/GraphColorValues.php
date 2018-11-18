@@ -2,7 +2,7 @@
 
 namespace Phpixela\Values;
 
-class ColorValues
+class GraphColorValues
 {
     const SHIBAFU = 'shibafu';
     const MOMIJI = 'momiji';

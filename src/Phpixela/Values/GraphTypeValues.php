@@ -2,7 +2,7 @@
 
 namespace Phpixela\Values;
 
-class TypeValues
+class GraphTypeValues
 {
     const INT = 'int';
     const FLOAT = 'float';
