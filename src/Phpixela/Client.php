@@ -14,15 +14,22 @@ class Client
     /**
      * Client constructor.
      * @param string $token
+     * @param null|mixed|\GuzzleHttp\Handler\MockHandler $handler
      */
-    public function __construct(string $token)
+    public function __construct(string $token, $handler = null)
     {
-        $this->client = new \GuzzleHttp\Client([
+        $config = [
             'base_uri' => self::BASE_URI,
             'headers' => [
                 'X-USER-TOKEN' => $token,
             ],
-        ]);
+        ];
+
+        if (!is_null($handler)) {
+            $config['handler'] = $handler;
+        }
+
+        $this->client = new \GuzzleHttp\Client($config);
     }
 
     /**
