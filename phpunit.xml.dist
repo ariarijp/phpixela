@@ -1,24 +1,13 @@
-<phpunit
-		 beStrictAboutOutputDuringTests="false"
-		 backupGlobals="false"
-		 backupStaticAttributes="false"
-		 bootstrap="tests/bootstrap.php"
-		 colors="false"
-		 convertErrorsToExceptions="true"
-		 convertNoticesToExceptions="true"
-		 convertWarningsToExceptions="true"
-		 processIsolation="false"
-		 stopOnFailure="false"
->
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit colors="true">
 	<testsuites>
-		<testsuite name="Collection Test Suite">
-			<directory suffix="Test.php">./tests/</directory>
+		<testsuite name="Phpixela Test Suite">
+			<directory>tests/</directory>
 		</testsuite>
 	</testsuites>
-	
 	<filter>
-		<whitelist>
-			<directory suffix=".php">./src</directory>
+		<whitelist processUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">src/</directory>
 		</whitelist>
 	</filter>
 </phpunit>
